@@ -1,0 +1,65 @@
+########################################################
+####################   Level Up   ######################
+########################################################
+
+1. Replace Magic numbers
+    - magic numbers are number with a special meaning in the code
+    - should be replaced by constants or even better by ENUMS
+
+        * bad
+        if(status == 1) {}
+
+        * improvement
+        enum Status {
+            NONE(0),ACTIVE(1),INACTIVE(2)
+        }
+        if(status == Status.ACTIVE){}
+
+
+2. Loop collections with foreach
+    - loop collections with foreach if no index is needed
+
+
+3. Don't modify collections while looping
+        * bad
+        for(String user : users) {
+            if(user.isTooYoung()) {
+                users.remove(user);
+            }
+        }
+
+        * improved
+        Iterator<String> userIterator = users.iterator();
+        while(userIterator.hasNext()) {
+            if(userIterator.next().isTooYoung()) {
+                userIterator.remove();
+            }
+        }
+
+
+4. Avoid compute intense operations in loops
+    - keep compute intense operations outside of loops
+    - e.g. pattern matching
+        * bad
+         for(String user : users) {
+            Pattern pattern = Pattern.compile(regex);
+            if(pattern.matcher(user.getUsername()).matches()) {
+
+            }
+         }
+
+        * improved
+         Pattern pattern = Pattern.compile(regex);
+         for(String user : users) {
+            if(pattern.matcher(user.getUsername()).matches()) {
+
+            }
+         }
+
+
+5. Group with new lines
+    - structure lines which belong together with new lines
+    - e.g. a class
+        * classname
+        * members, constructor, methods
+        * private methods

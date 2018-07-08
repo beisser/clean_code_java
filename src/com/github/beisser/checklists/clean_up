@@ -53,3 +53,39 @@
 
 
 5. Avoid NullPointerExceptions
+    - check method parameters for null _before_ calling methods on them
+    - passing null to a parameter is _bad practice_ instead, use method overloading instead
+
+        * bad
+        user.setInfo(street, null, null);
+
+        * improved
+        user.setInfo(street);
+
+        public void setInfo(String street) {
+            this.setInfo(String street)
+        }
+
+
+6. Overloaded constructors
+    - overloaded constructors should be private
+    - access to this constructors should only be granted through static factory methods
+        public static fromUsername(String username) {
+            // call constructor
+        }
+
+
+7. Beware of Switch fallthrough
+    - always add a break to cases to prevent fallthrough
+
+
+8. Always use curly braces
+    - if clauses also can have fallthrough cases if the curly braces are omitted
+    - always use curly braces in if clauses
+    - less code is not always better, the more readable code is better
+
+
+9. Ensure Code Symmetry
+- all parts of an if/else-Block should handle the same concern and should have the same structure
+- if parts of the if/else-Block handle different concerns devide them in additional blocks
+
