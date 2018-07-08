@@ -1,0 +1,55 @@
+########################################################
+####################   Clean Up   ######################
+########################################################
+
+1. No unnecessary comparisons
+        * bad:
+        if(user.isLoggedIn() == true) {}
+
+        * improved:
+        if(user.isLoggedIn()) {}
+
+
+2. Avoid Negations
+    - always try to code things the positive way
+    - avoid "!" and negated expressions
+
+        * bad:
+        if(user.isNotLoggedIn()) {}
+        if(!user.loggedIn()) {}
+
+        * improved
+        if(user.isLoggedIn()) {}
+
+
+3. Return Boolean directly
+    - in methods
+
+        * bad
+        if(user.isLoggedIn()) {
+            return true;
+        } else {
+            return false;
+        }
+
+        * improved
+        return user.isLoggedIn();
+
+
+4. Simplify Booleans
+    - group and simplify boolean expression to be more readable
+    - grouped boolean expressions can be assigned to a variable or method
+
+        * bad
+        if(user.isAwake() && car.wheels == 4 && car.fuel > 0 && (weather.temp > 20 || weather.isGood()) {}
+
+        * improved
+        boolean isCarReady = car.wheels == 4 && car.fuel > 0
+        private boolean isWeatherOk() {
+            weather.temp > 20 || weather.isGood()
+        }
+
+        if(user.isAwake() && isCarReady && isWeatherOk()) {}
+
+
+5. Avoid NullPointerExceptions
