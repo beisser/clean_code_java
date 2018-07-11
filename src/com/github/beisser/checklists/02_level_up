@@ -63,3 +63,26 @@
         * classname
         * members, constructor, methods
         * private methods
+
+
+6. String concat with format
+    - always use String.format("This is the %s", "layout")
+      %s -> small String
+      %S -> upper String
+      %d -> decimal
+      %n -> new line
+      %tm -> month
+      %tx -> day
+      &tY -> year
+
+
+7. Use Java API if possible
+    - always check if there already is a solution provided by the Java API before implementing a feature
+    - e.g. check if object is null
+
+        * bad
+           if(user == null) {}
+
+        * improved
+            // throws a NullPointerException
+            Object.requireNonNull(user, "User can not be null")

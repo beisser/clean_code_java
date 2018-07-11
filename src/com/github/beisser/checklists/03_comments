@@ -1,0 +1,54 @@
+########################################################
+####################   Comments   ######################
+########################################################
+
+1. Remove meaningless comments
+    - Comments which only repeat what the code already says
+    - remove TODOs -> implement the TODO or create a ticket ticket system
+
+
+2. Remove commented-out Code
+
+
+3. merge comments into code (constants, utility methods etc.)
+    - Constants and well named utility methods can make the code speak for itself so that comments are no longer needed
+    - whenever a comment can be merged to code -> do it
+
+        * bad
+        int getStatus() {
+            return 1;   // logged in
+        }
+
+        * improved
+        static final int LOGGEDIN = 1;
+        int getStatus() {
+            return LOGGEDIN;
+        }
+
+
+4. Document Implementation Decisions
+    - there are often several ways to achieve a solution to a problem, so a decision has to be made
+    - leave a comment why a specific problem was solved the way it is
+        * why
+        * what are the advantages / disadvantages of the decision
+    - use a template for decision comments in the team you work with: this way all aspects which are important
+      for the team are always available and its easier to understand because it has the same structure
+
+
+5. Document using examples
+    - document complex parts (e.g. regex) with examples
+
+
+6. JavaDoc
+    - Start with a sentence containing short summary of the class / package
+    - format the comment with HTML
+    - don't just repeat what the code already says
+    - add examples if required
+    - important Annotations:
+        @author
+        @link (add a link to a class which can be clicked)
+        @param (parameter, add additional info if required e.g. must not be null)
+        @return(what will be returned -> don't just write the data type)
+        @throws(any Exceptions ?!, under which circumstances will this exception be thrown e.g. parameter which
+            are null)
+        @see(references to other methods) -> especially helpful with overloaded constructors
