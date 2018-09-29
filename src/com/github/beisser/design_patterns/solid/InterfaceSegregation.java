@@ -1,4 +1,4 @@
-package com.github.beisser.design_patterns.solid.singleResponsiblity;
+package com.github.beisser.design_patterns.solid;
 
 /**
  * Interface Segregation
