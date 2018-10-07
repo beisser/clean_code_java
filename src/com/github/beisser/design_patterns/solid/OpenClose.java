@@ -14,6 +14,7 @@ import java.util.stream.Stream;
  *
  * with this pattern you don't change existing classes you just extend the functionality
  * with inheritance and implementation of interfaces
+ * after code was finished and tested no modification is allowed, only extension is valid
  */
 enum Color
 {

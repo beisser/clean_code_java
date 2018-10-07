@@ -1,7 +1,7 @@
 package com.github.beisser.design_patterns.composite;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.function.Consumer;
 
 /**
  * Composite
@@ -14,12 +14,23 @@ import java.util.List;
  * but we can also mark several shapes and drag them as a group
  */
 
-// create an object which can be a single object OR can represent a group of the same object using
-// the children
-// therefore this class has children of its own, is not abstract and has its own constructor
-// this is the core of the composite pattern: treating single or group objects in the same way
-class GraphicObject {
-    protected String name = "Group";
+// the key is that both the single and the collection object implement a common
+// interface which extends the iterable interface
+// the common interface then can provide default methods for both the single and the collection object
+interface CompositeObject extends Iterable<GraphicObject> {
+
+    // default method for both the single and the collection object
+    default void drag() {
+        for(GraphicObject o : this) {
+            System.out.println("drag " + o.name);
+        }
+    }
+}
+
+// for the single object the iterable interface must be implemented
+class GraphicObject implements CompositeObject{
+
+    protected String name;
 
     public String getName() {
         return name;
@@ -29,18 +40,29 @@ class GraphicObject {
         this.name = name;
     }
 
-    public List<GraphicObject> children = new ArrayList<>();
+    // iterable methods should be implemented like this
+    @Override
+    public Iterator<GraphicObject> iterator() {
+        return Collections.singleton(this).iterator();
+    }
 
-    public void print() {
-        StringBuilder stringBuilder = new StringBuilder();
-        if(this.children.isEmpty()) {
-            System.out.println("Print a single object");
-        } else {
-            System.out.println("Print a group of objects");
-        }
+    @Override
+    public void forEach(Consumer<? super GraphicObject> action) {
+        action.accept(this);
+    }
+
+    @Override
+    public Spliterator<GraphicObject> spliterator() {
+        return Collections.singleton(this).spliterator();
     }
 }
 
+// for the collection objects nothing needs to be done because arraylist implements iterable
+class GraphicGroup extends ArrayList<GraphicObject> implements CompositeObject{
+
+}
+
+// create an example graphic object
 class Circle extends GraphicObject {
     public Circle(String name) {
         this.name = name;
@@ -51,15 +73,16 @@ class CompositeDemo {
 
     public static void main(String[] args) {
 
+        // now both the single object and the collection can be treated as one
+
         // single object use
         Circle circle = new Circle("circle");
-        circle.print();
+        circle.drag();
 
         // group objects use
-        GraphicObject graphicObject = new GraphicObject();
-        graphicObject.children.add(circle);
-        graphicObject.children.add(new GraphicObject());
-        graphicObject.print();
+        GraphicGroup graphicGroup = new GraphicGroup();
+        graphicGroup.add(circle);
+        graphicGroup.drag();
 
     }
 
