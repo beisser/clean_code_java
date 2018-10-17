@@ -3,7 +3,10 @@ package com.github.beisser.design_patterns.strategy;
 /**
  * Strategy
  *
+ * Provide a skeleton algorithm, where the details can be changed
  * enables to select and change different strategies inside an object e.g. the use of different rendereres
+ *
+ * does this through composition (stick one object into another)
  */
 
 // different strategy options (UsernameRenderer and EmailRenderer)

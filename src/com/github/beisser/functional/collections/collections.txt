@@ -1,0 +1,23 @@
+######################
+#### Collections #####
+######################
+
+1. forEach: Iterate over a collection
+    > important: input parameters should be final
+    > options:
+        * with lambdas
+            users.stream().forEach( (final String user) -> {
+                // do something
+            })
+        * with references
+            users.forEach(System.out::println);
+
+2. map: Transforming a collection
+    users.stream().map(user-> user.username.toUpperCase())
+
+3. filter: Find Elements
+    users.stream().filter(user -> user.username.startsWith("N"))
+
+4. collect: collect the results of a stream
+    > by using tthe collect method we can transform the result of a stream
+    final List<User> newUsers = users.stream().collect(Collectors.toList())

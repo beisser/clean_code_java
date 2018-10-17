@@ -1,0 +1,41 @@
+#######################################################
+#### General Guidelines for functional progamming #####
+#######################################################
+
+1. Guidelines:
+- favour declarative over imperative programming
+- use immutability whenever possible (use final with variables, immutable collections)
+- avoid side effects
+    > immutability
+    > never change the inputs or anything else
+- prefer expressions over statements (expressions always return a value)
+- Design with higher-order functions
+    > pass not only objects to methods but also functions
+    > well tested functions therefore can be reused like objects
+
+2. Use of functional Interfaces
+- a functional interface is a interface with one abstract unimplemented method
+- use @FunctionalInterface
+- when we use a functional interface we can use:
+    > lambda expression
+    > method reference
+
+3. Typical functional Interfaces
+    > Function, Method apply (take an input and return an output)
+    > Predicate, Method test (takes an argument and checks if a condition is satisfied -> returns boolean)
+    > Consumer, Method: accept (Takes input, returns void -> ATTENTION: Sideeffects!)
+    > Supplier, Method: get (Factory -> takes no argument but returns an instance of an object)
+
+4. Reuse Lambda Expressions
+- as for normal code lambdas should not be duplicated
+- lambda expressions should be reusable e.g. to reuse filter lambdas
+- Options:
+    > Assign Lambdas to a variable (not good because the starting character will need to change)
+        final Predicate<String> startsWithN = name -> name.startsWith("N");
+        users.stream().filter(startsWithN)
+    > Use of Lexical Scoping / Closure (starting char can be passed to a function returning a lambda)
+        -> this is an example for returning a function
+        -> the lambda is reaching out to its context / the scope of the lambda definition to get the value of letter (this is c
+        public static Predicate<String> startsWith(final String letter) {
+            return name -> name.startsWith(letter);
+        }
