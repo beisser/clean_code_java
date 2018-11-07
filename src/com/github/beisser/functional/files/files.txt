@@ -1,0 +1,43 @@
+######################
+####### Files ########
+######################
+
+1. Iterate all files in a directory
+    Files.list(Paths.get('.'))
+        .forEach(System.out::println)
+
+2. Filter: filter out specific file tyles
+    Files.list(Paths.get('.'))
+            .filter(Files::isDirectory)
+
+3. DirectoryStream: List of selected files
+    > DirectoryStream has the best performance for huge file lists
+    > Get a stream of selected files only
+    Files.newDirectoryStream(
+        Paths.get("."), path -> path.toString().endsWith(".java")
+    )
+
+4. Get Files by attribute
+    new File(".").listFiles(file ->
+        file.isHidden())
+
+5. Iterate Subdirectories
+    > combine various streams with flatMap (much like in rxjs where the values from multiple observables are
+      converted to one)
+    > the lambda passed to the flatMap has to return a Stream itself
+    > flatMap then merges the different Streams
+    Stream.of(New File(".").listFiles())
+    .flatMap(
+        file -> file.listFiles() == null ? Stream.of(file) : Stream.of(file.listFiles())
+    )
+    .collect(toList())
+
+6. Listen for file changes
+    final Path path = Paths.get(".");
+    final WatchService watchService = path.getFileSystem().newWatchService();
+    path.register(watchService, StandardWatchEventKinds.ENTRY_MODIFY);
+    final WatchKey watchKey = watchService.poll(1, Time-Unit.MINUTES);
+    if(watchKey != null) {
+        watchKey.pollEvents().stream()
+        .forEach(event -> System.out.println(event.context()))
+    }

@@ -1,0 +1,85 @@
+##########################
+####### Linked List ######
+##########################
+
+- Array vs. Linked List
+    a.) Array
+    > feste unveränderbare Größe
+    > Einfügen eines Elements an einer bestimmten Stelle (nicht am Ende z.b. in der Mitte) sehr umständlich
+    (Einfügen und dann alle anderen bereits existierenden Elemente eins nach hinten schieben)
+
+    b.) Linked Lists
+    > flexible Größe
+    > Elemente können ab beliebiger Stelle eingefügt werden
+- Terminologie
+    > Nodes: Elemete in einer Linked List
+    > Head: Erster Node in der Linked List
+- Um die Nodes gut verwalten zu können braucht es einen Abstract Data Type -> Hier kommt die Linked List ins Spiel
+- Unterschiedliche Typen von Linked Lists:
+    a.) SinglyLinkedList
+        * Jeder Node besitzt einen Link auf den Nachfolger (mehr Info hat ein Node nicht)
+
+              public class Node {
+
+                 public int data;
+                 public Node next;
+
+              }
+
+              -> der letzte Node hat keinen nächsten und zeigt damit auf NULL
+        * SinglyLinkedList kennt nur ERSTEN Node (first)
+        * Alle Operationen können dann ausgehend von der ersten Stelle ausgeführt werden, da man sich von der ersten Node
+          über "next" durch alle anderen Nodes hangeln kann
+        * Operationen:
+            # insertFirst() -> neue Node an erster Stelle
+            # insertLast() -> neue Node am Ende einfügen (-> nicht sehr performant, da alle vorherigern Nodes geloopt werden müssen)
+            # deleteFirst() -> Node an erster Stelle löschen und nächste Node von der ehemals ersten Stelle an die
+                               erste Stelle rücken
+
+
+    b.) CircularLinkedList
+        * Jeder Node besitzt einen Link auf den Nachfolger (mehr Info hat ein Node nicht)
+
+                      public class Node {
+
+                         public int data;
+                         public Node next;
+
+                      }
+
+                      -> der letzte Node hat keinen nächsten und zeigt damit auf NULL
+        * CircularLinkedList kennt ERSTEN und LETZTEN Node (first und last) -> da bei SinglyLinkedList das Einfügen
+          am Ende nicht performant ist, da alle vorherigen Nodes geloopt werden müssen um die letzte zu bekommen
+        * Operationen:
+            # insertFirst() -> neue Node an erster Stelle
+            # insertLast() -> neue Node am Ende einfügen (jetzt performant, da "last" auch gespeichert wird)
+            # deleteFirst() -> Node an erster Stelle löschen und nächste Node von der ehemals ersten Stelle an die
+                               erste Stelle rücken
+
+
+    c.) DoublyLinkedList (wenn von LinkedList gesprochen wird, dann meint man in der Regel diese)
+        * Jeder Node besitzt einen Link auf den Nachfolger UND Vorgänger
+            public class DoublyNode {
+
+                public int data;
+                public Node next;
+                public Node prev;
+
+            }
+
+            -> der letzte Node hat keinen nächsten und zeigt damit auf NULL
+            -> der erste Node hat keinen vorherigen und zeigt damit auf NULL
+        * DoublyLinkedList kennt ERSTEN und LETZTEN Node (first und last)
+        * Operationen:
+            # insertFirst()
+            # insertLast()
+            # deleteFirst()
+            # deleteLast()
+            # insertAfter()
+            # deleteKey()
+
+
+- Löschen in LinkedList
+    > Die Nodes einer LinkedList müssen nicht explizit selbst gelöscht werden
+    > Indem bestimmte Nodes durch Ändern der Links nicht mehr von mindestens einem anderen Node referenziert werden,
+      werden Sie durch den GC selbst aus dem Heap gelöscht (vgl. basic_terminology.txt)

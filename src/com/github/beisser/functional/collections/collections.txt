@@ -20,4 +20,62 @@
 
 4. collect: collect the results of a stream
     > by using tthe collect method we can transform the result of a stream
+
     final List<User> newUsers = users.stream().collect(Collectors.toList())
+
+5. findFirst: pick one element from a collection
+    final Optional<String> foundFirst = users.stream().filter(name -> name.startsWith("N")).findFirst();
+
+6. mapToInt: convert all collection elements to integer
+    users.stream().mapToInt(user -> user.username.length)
+
+7. sum: sum up all integer collection elements
+    users.stream().mapToInt(user -> user.username.length).sum()
+
+8. max / min: find the max / min value in an numeric element collection
+    users.stream().mapToInt(user -> user.username.length).max()
+
+9. sorted: sort the elemets in an collection
+    users.stream().mapToInt(user -> user.username.length).sorted()
+
+10. average: calculate the average of all elements in an collection
+    users.stream().mapToInt(user -> user.username.length).average()
+
+11. reduce: compare two elements and pass along the result for comparison with the other collection elements
+    > returns the longest username
+    > example for the strategy pattern (the details get passed to reduce by a lambda)
+    users
+        .stream()
+        .reduce((user1, user2) ->
+            user1.username.length() >= user2.username.length() ? user1.username : user2.username);
+
+    > there is also an overloaded version of the reduce('defaultValue', lambda)
+    > we can set a default value which is used for the first comparison
+        users
+            .stream()
+            .reduce('defaultValue',(user1, user2) ->
+                user1.username.length() >= user2.username.length() ? user1.username : user2.username);
+
+12. collect: transform the elements of an collection
+    > on the low level there is the collect method, which needs to now 3 things:
+        * how to make another form -> e.g. ArrayList::new
+        * how to add a single element -> e.g. ArrayList::add
+        * how to merge two containers -> e.g. ArrayList::addAll
+
+        users.stream().collect(ArrayList::new, ArrayList::add, ArrayList::addAll)
+    > there are other more high-level functions that can be used with the collect method using the
+      Collectors util class which has the following methods:
+        a.) Collectors.joining: Join to String
+            # convert to comma separated string (implode)
+            users.stream()
+                .collect(Collectors.joining(", "))
+
+        b.) Collectors.toList
+        c.) Collectors.toSet
+        d.) Collectors.toMap
+        e.) Collectors.groupingBy(User::getAge()): Grouping of the results
+        f.) Collectors.mapping
+
+    > Collector methods can also be combined
+        Map<Integer, List<String>> nameOfUsersByAge = users.stream()
+            .groupingBy(User:getAge, mapping(User::getName, toList()))

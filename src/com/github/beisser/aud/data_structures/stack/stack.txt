@@ -1,0 +1,18 @@
+###################
+####### Stack #####
+###################
+
+- Prinzip: Last In First Out (LIFO)
+- Stack-Implementierung siehe Java Klasse
+- Popular Methods of Stack implementations:
+    > push -> Element hinzufügen
+    > pop -> Element herausnehmen
+    > peak -> oberstes Element zurückgeben (ohne es zu entfernen)
+    > isEmpty
+    > isFull -> maxSize ist erreicht
+- Szenarien für den Stack:
+    > String reverse
+    > Equation String parsing
+        z.B. schauen ob geöffnete Klammern auch wieder geschlossen werden
+            -> Typ der Klammer auf den Stack pushen
+            -> Bei pop dann das Klammer-Gegenstück zurückgeben

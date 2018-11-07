@@ -1,0 +1,37 @@
+######################
+#### Comparision #####
+######################
+
+1. Sorting with a Comparator (another Functional Interface)
+    > Sorting a list of objects by different members
+    users.stream().sorted((user1, user2) -> {
+        user1.ageDifference(user2)
+    })
+
+2. ASC and DESC
+    > to switch between ASC and DESC we can use the same Comparator
+    // ASC
+    Comparator<User> compareAsc = (user1, user2) -> user1.ageDifference(user2)
+
+    DESC
+    Comparator<User> compareDesc ? compareAsc.reversed()
+
+3. min / max: Returns the smallest / biggest object in the collection after using the given comparator
+    users.stream().min((user1, user2) -> user1.ageDifference(user2))
+
+    > returns Optional so we must use ifPresent afterwards (because the list may be empty)
+    ifPresent: do something if there is a value
+    users.stream()
+        .min((user1, user2) -> user1.ageDifference(user2))
+        .ifPresent(System.out::println)
+
+4. comparing: Creating a Comparator form another function
+    > we just need to write what we want to compare in a function
+    final Function<User, String> byName = person -> person.getName();
+    users.stream().sorted(comparing(byName))
+
+    > also multiple comparisons are possible
+    final Function<User, String> byName = user -> user.getName();
+    final Function<User, Integer> byAge = user -> user.getAge();
+        users.stream()
+            .sorted(comparing(byName).thenComparing(byAge))

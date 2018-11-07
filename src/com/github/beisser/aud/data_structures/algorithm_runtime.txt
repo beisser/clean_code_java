@@ -1,0 +1,42 @@
+################################
+####### Algorithm Runtime ######
+################################
+
+- Algorithm: jeder Code der ein Problem löst ist ein Algorithmus
+- Algorithmen sind jedoch unterschiedlich schnell, je nachdem wie sie implementiert wurden
+- Algorithmen skalieren entsprechend Ihrer Input Größe: Entscheidend ist wie viele Operationen der Computer
+  in Abhängigkeit von der Input Größe durchführen muss
+
+   a.) Linear (Einzelne Loop)
+    > z.B. bei Listen und Collections
+    > pro Element in der Liste ist EINE Operation notwendig
+    > wird EINE Liste EINMAL geloopt, steigt die benötigte Zeit linear, wenn die Liste (der Input) größer wird
+    > je größer die Liste, desto länger die Dauer
+        -> ist eine akzeptable Zeit
+
+    b.) Quadratisch (Loop in einer anderen Loop)
+    > meist bei Listen und Collections
+    > jedoch Unterschied zu Linear: der Algorithmus enthält Loop in einer Loop
+    > pro Element in der Liste ist sing MEHRERE Operationen notwendig
+    > ACHTUNG: Loop in einer Loop verlangsamt den Algorithmus (hat jede Loop 10 Iterationen bräuchte man damit
+      10 * 10 = 100 Iterationen bei 2 nested Loops)
+        -> schlechte Zeit
+
+    c.) Cubic (n nested Loops)
+    > meist bei Listen und Collections
+    > jedoch Unterschied zu Quadratisch: der Algorithmus enthält mehrere nested Loops
+    > pro Element in der Liste ist sind MEHRERE Operationen notwendig
+        -> ganz schlechte Zeit
+
+    b.) Konstant (keine Loop)
+    > wenn kein Looping über eine Liste oder eine Collection vollzogen wird
+    > Code in dem konstant nur eine Operation durchgeführt wird
+    > die Zeit ist unabhängig von der Größe des Inputs (auch wenn z.B. eine List wächst, bleibt die Zeit gleich)
+        -> optimal
+
+- Die Effizenz von Algorithmen wird so angegeben:
+    > Konstante Steigerung: = O(1)
+    > Lineare Steigerung: O(n)
+    > Quadratische Steigerung: O(n2) (hoch zwei)!
+    > Cubic: O(n4) (z.B. hoch vier)
+        -> n ist dabei die Größe des Inputs

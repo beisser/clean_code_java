@@ -1,0 +1,275 @@
+
+Clean Code
+
+1 allgemein
+
+    immer clean coden
+    Code ohne Tests ist nicht clean
+    Vorstellen man ist Autor -> andere werden Code lesen
+    Man liest selbst während dem entwickeln immer wieder eigenen Code den man versehen muss
+    Code beim lesen immer nach refactoring Möglichkeiten scannen und dann auch tun (wenn auch nur Renaming oder Methode aufsplitten) -> boyscout -> keine Angst was kaputt zu machen wenn es Tests gibt
+    Wichtig: Design Pattern kennen und einsetzen!
+    Clean Code schreibt man nicht im ersten Anlauf -> immer erst Dirty coden damit es funktioniert, dann Code clean refactorn
+    Wenn man merkt dass der Code aus dem Ruder läuft dann auch anfangen zu refactorn -> wenn man unittests hat darf man diese einfach nicht verändern -> diese sichern dann dass der Code genauso läuft wie vorher
+    Refactoring ist ein bisschen wie ein puzzle lösen, man muss mehrere Teile ausprobieren um das große Ganze zu erhalten
+
+
+2 Namen
+
+    immer aufschlussreiche Namen geben (was wird gemacht, welche Einheit wird verwendet zb timeInDays) -> Name sollte keinen Kommentar erfordern
+    In Code statt Hard Codes Strings oder ints constants verwenden die gut benannt sind (oder noch besser Enums)
+    Keine Namen mir nur minimalen Abweichungen
+    Kleines o und l sind problematisch da ähnlich zu 0 und 1
+    Wenn ein Name schon belegt ist (zb Class), sollte die Alternative dennoch gut sein
+    Anhängen von zahlen um Namen öfter verwenden zu können vermeiden (car1, car2)
+    Keine Noise words (a, the, Data, Info, Object etc) und Typen -> schlechte Beispiele personObject oder NameString
+    Namen müssen für jeden aussprechbar sein
+    Namen wählen der suchbar ist (also nicht zu kurz oder ein Name der in der Programmierung eh schon vorkommt) -> daher auch lieber konstanten als zb eine Zahl im Code
+    keine Umlaute etc encoding vermeiden
+    I am Anfang von Interface Namen weglassen -> aber Impl am Ende der Implementierung hin
+    I, j,k als Loop-Variablennamen sind ok
+    Klassennamen müssen nomen sein
+    Method Namen sollten Verb enthalten
+    Get, set und is bei gettern und Settern
+    Bei überladenen constructors lieber Static Factory Methods verwenden die die Argumente beschreiben (zb User.FromUsername(Username)) -> constructor dann private machen
+    Immer normale Wörter verwenden (Delete besser als zb kill)
+    Konsequent beim benennen bleiben (fetch oder get und dann bei einem bleiben), ebenso bei Klassen
+    das gleiche Wort nicht für unterschiedliche Zwecke verwenden
+    Domain spezifisches Vokabular verwenden
+    Namen einen Context geben ! Zb isActiv kann vieles sein aber in klasse User hat isActiv einen Context (Funktion kann auch ein Context sein)
+    Suche in ide ist einfacher wenn nicht alles gleich heisst (also keine 10 IndexController sondern UserController, RoleController)
+    Zwischenvariablen oder hilfsfunktionen mit guten Namen verwenden! ( zb bei komplexen boolschen Bedingungen diese lieber aufsplitten und mit guten Namen versehen oder zum speichern von Zwischenergebnissen oder besser als verkettete Methoden Aufrufe) -> sind leichter zu lesen -> lieber Zuviel davon als zu wenig
+    Funktionennamen sollen sagen was sie tun (ein Blick auf die methodendefinition sollte nicht notwendig sein )
+    Wenn Patterns verwendet werden, dann die Klassen auch so benennen
+    Lange Namen sind in Ordnung wenn viel in einem Codeteil passiert
+
+
+3 functions
+
+    Müssen Kurz sein! (Max 20 Zeilen) -> Aufgabe ist dann gleich klar
+    Blocks in if, Else, While etc. sollten in eine Zeile passen -> noch besser sollen hier nur andere Funktionen aufgerufen werden (haben diese guten Namen ist sofort klar was getan wird)
+
+If(true) { logIn() }
+
+    nur 1 bis 2 Einrückungsebenen (ifs etc)
+    Jede Funktion darf nur 1 Aufgabe haben aber nur sie soll die Aufgabe übernehmen (keine andere Funktion) -> aus Funktionen so lang weitere extrahieren bis jede nur noch eine Aufgabe hat ( in Hierarchie) -> ist eine Funktion in Sektionen unterteilt ist das Hinweis auf mehr als eine Aufgabe
+    Jedes Statement in einer Funktion sollte gleiches Abstraktionslevel haben
+    Zusammengehörende Funktionen müssen beieinander stehen (dh Funktion mit niegdrigem Abstraktionslevel (zb getElement())müssen direkt nach den höheren kommen (zb gerHtml())
+    Switch -> siehe Lesezeichen
+    Namen wählen welcher die Aufgabe der Funktion gut beschreibt -> keine Angst vor zu langen Namen (lieber zu lange als zu kurz)
+    Funktionen sollten so wenig Argumente haben wie möglich (bestenfalls keine, Max 3) -> je mehr Argumente desto schwere r zu lesen und zu testen (falls mehr als 3 benötigt werden -> Objekt erstellen und das dann übergeben)
+    Keine Objekte durch mehrere Funktionen durchziehen (zb StrimgBuffer immer weiterreichen -> Stringbuffer hier lieber zu membervariable machen)
+    Nie boolean /flag Argumente an Funktion übergeben (macht’s komplizierter, Funktion Macht dann auch mehr als eine Sache) -> lieber 2 Methoden machen
+    Funktionsnamen und Argumentnamen sollten schön zusammen klingen und aussagekräftig sein (zb write(Name))
+    Keine seiteneffekte!!! -> Methode soll eine Sache machen, nichts anderes
+    Funktionen sollen ENTWEDER etwas tun (State eines Objekts ändern) ODER Infos über ein Objekt geben -> niemals beides -> d.h. ZB wenn Methode die ein Objekt zu einer Collection hinzufügt sollte diese nicht boolean true und false (für Erfolg oder Fehler) zurückgeben, da verwirrend für Leser (Command und Query trennen)
+    Bei Command functions(die den State eines Objekts verändern) immer exceptions bevorzugen statt error Codes oder booleans zurückgeben -> andernfalls werden sie in ifs verwendet was nicht sein soll -> führt zu nested ifs
+    Body von Try and catch in eigene function auslagern -> dh eine Funktion Delete welche nur den Try catch enthält und eine function deleteUser() welche die eigentliche lösch-Logik enthält und innerhalb des Try aufgerufen wird; so wir error handling von Logik getrennt (Funktionen sollen nur eine Sache machen -> error Handling ist eine Sache)
+    Dont repeat yourself!
+    Wie schreibt man schöne Funktionen: erst einmal hinklatschen wenn auch unschön, Hauptsache sie macht das richtige, dann Unit Tests schreiben, dann Funktion schön machen
+
+
+4 Kommentare
+
+    guter / lesbarer Code sollte Kommentaren wenn möglich immer vorgezogen werden
+    Immer schauen Kommentare durch gute Namensgebung zu umgehen
+    Kommentare sind gut als
+
+a) Info zur Verwendung (zb eine Regex mit einem Beispiel im Kommentar versehen)
+b) Info über Beweggründe einer Design Entscheidung)
+c) Warnhinweise
+d) Todos
+
+    Kommentare sind schlecht:
+
+a) wenn sie nur beschreiben was eh schon im Code steht (z.b. Throws exception)
+b) falsche Kommentare (von Anfang an Bzw solche die beim refactoring vergessen wurden)
+c) generell vorgeschriebene Kommentare (zb jede Funktion braucht einen Kommentar -> stimmt nicht! Auch nicht jede Funktion braucht javadoc!!!) -> generell notwendige Kommentare gibt es nicht!
+d) um teile einer Klasse zu gruppieren (sowas nie machen: /////// actions)
+e) alles was Versionsverwaltung weiß muss raus aus dem Code (z.b. Added by)
+f) auskommentierter code -> immer rausschmeißen (da ja in versionsverwaltung)
+g) nie HTML in Kommentaren verwenden
+h) keine javadocs bei nicht Public functions
+
+5 Formatierung
+
+    Code immer schön formatieren
+    regeln zunächst festlegen im Team und dann konsequent durchziehen
+    Files / Klassen sollten 200 - maximal 500 Zeilen lang sein
+    File sollte wie Zeitungsartikel sein: klassenname (Überschrift) für allgemeine Info -> je weiter man runterscrollt desto tiefer geht die Klasse ins Detail (eben wie in der Zeitung)
+    Leerzeilen zwischen zusammengehörigem Code
+    Zusammengehöriges nah beieinander (keine Leerzeichen oder Kommentare dazwischen), gilt auch für Funktionen (funktionen die von einer Funktion aufgerufen werden immer nah bei dieser! -> hoch und runterscrollen sollte man vermeiden können)
+    High-Level Funktionen immer vor Low Level Funktionen
+    Member Variablen immer oben in der Klasse
+    Zeilen nicht mehr als 120 Chars lang
+    Bei Mehreren Variablendeklarationen keine gleiche Ausrichtung !!! Also die = Zeichen müssen nicht auf einer Linie sein!
+    Immer entsprechend der scopes einrücken (zb bei if oder While)
+
+
+6 Objekte vs Datenstrukturen
+
+    Bei Objekten : Implementierung immer verstecken: das geht über Abstraktion -> immer Interface bauen (Interface gibt eine stabile Public API zur Arbeit mit den Daten, das wie ist versteckt dh Daten und die interne Struktur sollen versteckt sein nur die Operationen sollen sichtbar sein ) -> hier Zeit investieren um Public API zu bauen nicht nur einfach Getter und Setter denn Daten sollen versteckt sein nur die Operationen sollen sichtbar sein !!!
+    Gutes Beispiel:
+
+Interface Shape { Public int getArea() }
+-> super da man zwar die Fläche bekommen kann, jedoch nicht weiß welche Daten dafür verwendet werden
+
+    Auch die interne Struktur sollte immer versteckt sein bzw sollte der aufrufer wenig wissen müssen (z.b. Die Methoden der Public API nicht von einander abhängig machen, ein „navigieren“ über Objekt Methoden vermeiden! Zb schlechtes Beispiel: User.getOptions().getName()-> vgl. Law of demeter: die Methode m der Klasse k soll nur mit folgenden kommunizieren: a) anderen Methoden der Klasse k b) Methoden von Objekten die an m übergeben werden c) Methoden von Objekten die member von k sind d) Methoden von Objekten die m erzeugt -> die Methode darf aber nicht auf Methoden von Objekten zugreifen die von den oben genannten erlaubten Methoden zurückgegeben werden (Talk to Friends, Not to strangers)
+    Keine Verkettung von Methoden machen( schlechtes Beispiel: User.getFoo().getBar().getBla()
+    Unterschied Objekt / Daten Struktur:
+
+Objekt
+
+
+Datenstrukturen
+
+Operationen bereitstellen
+
+
+Reine Daten bereitstellen
+
+    Data Transfer Object -> Beispiel für Datenstruktur -> dto hat nur Public Variablen aber keine Methoden oder Funktionalität
+    Wichtig: niemals Objekt und Datenstruktur vermischen
+
+
+7 error handling
+
+    Immer exceptions anstelle von Return Codes verwenden
+    Immer unchecked exceptions verwenden (checked exceptions werden während des kompilierens geprüft und müssen daher mit Throws oder Try catch gehandled werden, was bei großen objekt Hierarchien gegen das OCP verstößt da bei werfen einer exception in einer Low Level Funktion alle höheren angepasst werden müssen -> bei unchecked muss die exception nicht explizit gehandlet werden )
+    Immer Context Bzw genügend Information in der exception mitgeben
+    Externe APIs Wrappen damit man eigene exceptions werfen kann (minimiert die Abhängigkeit zu anderen Libs und fördert die Austauschbarkeit)
+    Special case Objekt: ab und zu kann es besser sein so etwas wie ein special case Objekt (welches ein Default verhalten repräsentiert) Bzw ein Default Objekt zu verwenden im fehlerfall statt exceptions zu werfen (vgl. Zb empty List)
+    Niemals null zurückgeben! Führt zu unzähligen null-Checks die notwendig sind -> Bzw führt zu errors wenn es vergessen wird -> daher wenn man null zurückgeben möchte lieber exception oder Special case Objekt verwenden
+    Zudem niemals null einer Methode als Argument übergeben!
+
+
+8 mit fremdcode umgehen (Libs)
+
+    nie third Party Code durch die eigene application reichen, da viel geändert werden muss wenn API der Lib sich ändert -> vielmehr Eigene Objekte erzeugen die als decorator dienen (zb nicht Map rumreichen da Map schon Third Party Code ist -> besser ein Users Objekt erzeugen welches die Map von Usern kapselt -> man hat zentralen Punkt bei Änderungen
+    Einarbeitung in third Party Libs am besten indem man Tests schreibt -> in diesen schaut man zunächst dass man die Lib in einem Test zum laufen bringt und dann prüft man Mit Tests ob die Lib kann was man braucht -> zudem gut an den Tests wenn eine neue Version der Lib kommt kann man mit den Tests prüfen ob noch alles so ist wie vorher
+    Wenn man mit anderem Team arbeiten muss und zb die API des anderen Teams noch nicht kennt dann einfach eigene API schreiben und dann bei Lieferung durch das andere Team einen Adapter bauen -> auch wieder gut da wieder zentraler Ort bei Änderungen
+    Zusammenfassung: Referenzen zu Libs in eigenen Code möglichst gering halten -> lieber wenige zentrale Orte wo man Libs referenziert vgl decorator, wrapper, Adapter (vgl SHIQuery vs SolrQuery)
+
+
+9 Unit Tests
+
+    3 steps TTD:
+
+a) bevor man echten Code schreiben darf muss man einen fehlschlagenden Test schreiben
+b) man darf vom Test nur soviel schreiben dass er fehlschlägt
+c) dann darf man nur so viel richtigen Code schreiben dass der Test erfolgreich ist
+-> danach wieder von vorne
+
+    Test Code ist genauso wichtig wie normaler Code -> er muss daher auch clean sein!
+    mit cleanen Tests hat man keine Angst Code zu ändern
+    Eigenschaften eines clean Tests: Lesbarkeit, Einfachheit
+    ein Test sollte 3 teile haben: Testdaten vorbereiten, Operation auf Testdaten, Ergebnis überprüfen
+    Duplicate Code auch in Tests vermeiden ( zb mit Template Method Pattern oder @before verhindern)
+    Faustregel: ein Test darf nur genau eine Sache testen!!!
+    Alles testen und sollte es auch noch so trivial sein
+    Fehlschlagende Tests nie ignorieren
+    Wenn man einen bug entdeckt dann die Stelle besonders gut mit Tests abdecken -> ein Bug kommt selten allein!
+    Test müssen schnell laufen, sonst werden sie irgendwann abgeschaltet
+    Zusammenfassung: Test sollten sein: F.I.R.S.T:
+
+a) Fast
+b) Independent (von anderen Tests; sollten allein laufen können)
+c) Repeatable
+d) Self-validating (Ergebnis soll true oder false sein -> Test ist entweder erfolgreich oder nicht)
+e) Timely (Tests sollten VOR eigentlichem Code geschrieben werden -> zwingt einen Testbaren Code zu schreiben)
+
+    Code coverage Tool verwenden
+
+
+10 Klassen
+
+    aufbau: Public konstanten, private konstanten, private Variablen, constructor, Public Methoden (private Methoden welche von den public verwendet werden immer sofort nach den Public -> nicht gesammelt am Ende!)
+    Kapselung -> nur dünne Public API, möglichst viel private Methoden und Variablen (Variablen eigentlich immer private)
+    Klassen klein halten!
+    Klasse darf auch nur eine Aufgabe haben (single responsibility) / nur ein Grund um sie zu ändern -> was die Klasse macht soll in einem Satz erklärbar sein (und ohne Füllwörter wie und, aber etc)
+    Große Klassen immer in mehrere kleine aufteilen
+    Immer an OCP denken!!! -> lieber immer Interface mit konkreten Implementierungen - System immer erweitern ohne Bestandscode anfassen zu müssen
+    Dependency inversion principle (Klassen sollten von Abstraktionen abhängen und nicht von konkreten Details) -> immer auf Abstraktion setzen (Interfaces, abstrakte Klassen -> beide repräsentieren Konzepte -> Klassen dann die konkreten Implementierungsdetails
+    Abstraktion führt zu loser Kopplung von Komponenten und daher zu besserer Testbarkeit
+
+
+11 Service
+
+    Objekt Erzeugung von der Verwendung trennen! Sowas nicht machen:
+
+Class User {
+getUser() {
+// Bad!!!
+If(this.service == null) {
+this.service = new UserService();
+}
+this.serice.get()
+}
+}
+
+    Muss man Objekte selbst erzeugen dann für objekterzeugung immer abstract factories verwenden -> ansonsten Dependency Injection nutzen wann immer möglich
+    Immer agil entwickeln d.h. Nach aktuellen Anforderungen und Stories -> dabei auf Skalierbarkeit achten, sodass das System erweitert werden kann um neue Stories umzusetzen
+    Schichtenmodell, keine Verzahnung mit dem verwendeten Framework machen ein System sicher für die Zukunft (vgl infopilot Controller- Schicht) - verwendetes Framework oder Speichertechnologie soll daher Austauschbar sein
+    Code sollte immer aus reinen POJOs gestehen dh zb keine Framework spezifischen annotationen oder concurrency Code
+
+
+13 Concurrency
+
+    SRP bei concurrency heißt: concurrent Code von anderem Code trennen (da concurrent Code selbst schwer genug ist auch ohne in anderen Code eingebettet zu sein)
+    Code wo gemeinsames Objekt bearbeitet wird unbedingt auf wendige Bereiche reduzieren (dann zb synchronized verwenden)
+    Kapselung ist noch wichtiger -> die Zugriffsmöglichkeiten auf ein geteiltes Objekt immer auf ein Minimum reduzieren
+    Wenn immer möglich mit immutable Daten arbeiten
+    Code der von einem Thread ausgeführt wird sollte unabhängig von anderen Threads sein (möglichst keine geteilten Daten, keine Seiteneffekte) -> nur (nicht geteilter) Input und lokale Variablen wenn möglich
+    Immutable Collections verwenden
+    Basic algorithmen verstehen und Anwesen können (Producer-Consumer, Readers-Writers, Dining Philosophers)
+    Wenn möglich nie mehr als eine Methode auf einem geteilten Objekt verwenden -> wenn doch notwendig dann lock erstellen dann alle notwendigen Methoden aufrufen dann wieder freigeben
+    Code in synchronized Teil klein halten, da sehr Performance lastig
+    Immer sicherstellen dass sich Threads auch alle beenden lassen
+    wenn Fehler nur ab und zu vorkommen, man aber nicht weiß wann -> nicht ignorieren, sondern versuchen Fehler zu reproduzieren
+    Code zunächst ohne eigene Threads zum laufen bringen -> nur fehlerfreier Code hat auch in Threads gut Erfolgschancen
+    Code der für concurrency da ist (siehe oben unbedingt von normalem trennen!) konfigurierbar machen (zb Anzahl der Threads, mehrere durchläufe etc.)
+    Code mit mehr Threads als Prozessoren testen
+    Code auf verschiedenen Plattformen laufen lassen
+    Wenn man einen fehler sucht können die Methoden yield oder sleep helfen wenn Man sie testweise einbaut -> noch besser Frameworks zum jigglen benutzen
+
+
+14 schlechten Code erkennt man an
+
+    Kommentare die Info enthalten die woanders besser hingehört (in Versionsverwaltung etc.) -> Beispiel file Historie
+    Überflüssige Kommentare (da zb veraltet)
+    Redundante Kommentare (beschreiben was eh schon dasteht im Code -> zb javadoc die nur funktionssignatur angibt)
+    auskommentierter Code
+    Ein Projekt benötigt mehrere Schritte um es zu bauen (es darf nur einer notwendig sein!!!)
+    ausführen von Tests benötigt mehr als einen Schritt
+    Funktionen haben zu viele Argumente (mehr als 3)
+    Funktionen haben boolean (oder enums oder integer Code die zu unterschiedlichem Verhalten führen) Flags als Input (Funktion macht dann mehr als eine Sache)
+    Funktionen die nirgends verwendet werden
+    Mehr als eine Sprache im Source File (zb Java, html, css ) -> sollte so wenig wie möglich sein
+    Zu umständliche Herangehensweise (principle of least sursprise -> vgl css klasse statt directive für Cursor on Hover)
+    Code ist nicht unter allen Umständen getestet (zb unterschiedliche Systeme)
+    Sicherheitsfeatures wurden abgeschaltet oder ignoriert (Warnings ausgeschaltet, Tests ausgeschaltet)
+    Duplicated Code (jeder doppelte Code ist verpasste Abstraktion) -> nicht nur copy paste von Code gehört dazu sondern auch sowas wie Switch case die immer wieder das gleiche prüft oder unterschiedlicher Code der das gleiche macht -> Template Method oder Strategy Pattern helfen hier
+    Inkonsequente Abstraktion: konsequente Abstraktion ist wichtig (vgl Template Method oder strategy -> generelle higher Level concepts zb in abstrakte base Class, Low Level in Ableitung)
+    Abstrakte basisklasse ist abhängig von Ableitungen (basisklasse darf nichts von Ableitungen wissen)
+    Zu große Public API von Klassen (führt zu zu starker kopplung) -> Faustregel: möglichst wenig Methoden in einer Klasse, Variablen in einer Methode, member in einer Klasse ->insgesamt : Interfaces sehr klein halten!
+    Dead Code (zb Code in Else Statement das nie erreicht wird)
+    Variablen oder Funktionen werden weit von ihrer Verwendung weg definiert (is schlecht, da Definition und Verwendung nah beieinander sein sollten -> auch private Methoden sollten immer direkt unter ersten Verwendung definiert werden)
+    Inkonsequenz (Konventionen sollten konsequent durchgezogen sein -> vgl principle of least surprise)
+    Überflüssige Elemente (zb constructor der nichts macht) -> entfernen !!!
+    Kopplung von eigentlich auch generaliserbaren Dingen -> zb enum oder Static function ist in einer bestimmten Klasse definiert -> schlecht da das enum oder die Static function dann immer mit der Klasse verbunden ist statt generell einsetzbar zu sein
+    Methoden einer Klasse versuchen über Zugangs- oder Bearbeitungsmethoden von einer ANDEREN Klasse Zugang zu deren Daten zu bekommen (Methoden sollten nur An Variablen und Methoden der eigenen Klasse interessiert sein !!!)
+    Versteckte Intentionen / Code ist wenig aufschlussreich (zb wegen Magic Numbers)
+    Code ist an stellen platziert wo nicht erwartet -> vgl principle of least surprise (immer Code da platzieren wo ein normaler Coder ihn erwartet
+    Switch case (sollte immer vermieden werden und durch polymorphismus ersetzt werden -> nur EIN Switch case verwenden welches eine abstrakte Factory für Objekte eines Interfaces ist)
+    Vereinbarte Coding Konventionen werden verletzt
+    Zu komplexe Bedingungen (zb viele kombinierte boolsche ausdrücke) -> Zu komplizierte Codestellen inzwischenvariablen oder gut benannte Funktionen auslagern
+    Negierte Bedingungen (solche am besten vermeiden)
+    Funktionen machen mehr als eine Sache (sie sollten nur genau eine Sache machen -> daher immer in mehrere kleine aufteilen)
+    Konfigurationen oder Default values im Low Level Code -> Konfigurationen sollten im abstrakten high Level Code eingelesen Bzw definiert werden und nicht im Low Level Code! -> high level Code soll dann die Konfigurationen als funktionsparameter an das Low Level übergeben
+    Code weiß zu viel über nicht direkte Nachbarn (Verstoß gegen law of demeter -> man soll nicht durch den ganzen objekt Graph gehen müssen um die gewünschte Methode zu erlangen, sondern diese immer bei direktem Partner finden -> also nicht a.getB().getC() -> sondern a.getC())
+    Zu lang Import Listen (lieber wildcards verwenden -> bei mehr als 2 Klassen aus einem Paket)
+    Konstanten werden statt enums verwendet -> das ist falsch -> immer enums bevorzugen
+
+
+
+Von meinem iPhone gesendet

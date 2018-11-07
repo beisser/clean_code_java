@@ -25,6 +25,7 @@
     > Predicate, Method test (takes an argument and checks if a condition is satisfied -> returns boolean)
     > Consumer, Method: accept (Takes input, returns void -> ATTENTION: Sideeffects!)
     > Supplier, Method: get (Factory -> takes no argument but returns an instance of an object)
+    > Comparator, Method compareTo (takes 2 arguments and returns int -> used for sorting)
 
 4. Reuse Lambda Expressions
 - as for normal code lambdas should not be duplicated
@@ -35,7 +36,129 @@
         users.stream().filter(startsWithN)
     > Use of Lexical Scoping / Closure (starting char can be passed to a function returning a lambda)
         -> this is an example for returning a function
-        -> the lambda is reaching out to its context / the scope of the lambda definition to get the value of letter (this is c
-        public static Predicate<String> startsWith(final String letter) {
+        -> the lambda is reaching out to its context / the scope of the lambda definition to get the value of letter
+
+        //  lamba function which takes a letter and passes it to another lambda function
+        //  which is then returned
+        final Function<String, Predicate<String>> startsWithLetter = (String letter) -> {
             return name -> name.startsWith(letter);
         }
+
+        // the above combined lambda even shorter
+        final Function<String, Predicate<String>> startsWithLetter = letter -> name -> name.startsWith(letter)
+
+5. Optional Type
+- use Optional Type instead of Null
+    final Optional<String> foundFirst = users.stream().filter(name -> name.startsWith("N")).findFirst();
+    System.out.println(foundFirst.orElse("Not Found"))
+- Methods on Optional Type (also accept lambda expressions)
+    > orElse -> Value if no value is present
+    > isPresent -> check if value is available
+    > ifPresent(value -> System.out.println(name))
+
+6. Design programs with Lambdas
+- Lambdas can help us to implement common design patterns much easier
+
+    6.1. Separate concerns from a method (Strategy pattern & OCP)
+    - if there are multiple methods that generally do the same, we have to check which concern is different in all
+      methods an separate this one out
+
+     // sum of all ages of Web-Users
+     users.stream()
+        .filter(user -> user.getType() == User.WEB_USER)
+        .mapToInt(User::getAge)
+        .sum()
+
+    // sum of all ages of Local-Users
+    users.stream()
+        .filter(user -> user.getType() == User.LOCAL_USER)
+        .mapToInt(User::getAge)
+        .sum()
+
+    -> here the filter is the concern to separate
+    -> we can use a predicate function to make this concern dynamically changeable
+    -> the result is our own HIGHER ORDER METHOD!
+    -> in this case we implemented the Strategy and the OCP patterns
+    public static int getSumOf (final List<Users> users, final Predicate<User> userSelector) {
+        users.stream()
+            .filter(userSelector)
+            .mapToInt(User::getAge)
+            .sum()
+    }
+
+
+    6.2. Separate Concerns from a class (Strategy pattern & OCP)
+    - instead of embedding an implementation we separate the concern and use abstraction (Dependency inversion and
+      Dependency Injection)
+
+    public class User {
+
+        private String username = "John.Doe";
+
+        // separation of concerns / use abstraction instead of implementation
+        private Function<String, String> renderer;
+
+        public User(final Function<String,String> renderer) {
+            this.render = renderer;
+        }
+
+        public String renderUser() {
+            // calling the apply method of the function
+            this.renderer.apply(user.username);
+        }
+
+    }
+
+    //usage
+    User user = new User(username -> "<h1>" + username + "</h1>");
+    user.renderUser();
+
+
+    6.3. Decoration with Lambda Expressions
+    - the Function interface has a default method named compose() -> this allows to chain multiple functions together
+    - after combining we can call the apply method to start the chaining
+        -> result is second.apply(first.apply(input))
+        -> the compose function can now be used in a reduce() method to combine multiple functions
+
+        // TODO Code Beispiel
+
+
+    6.4. Builder with Lambdas
+    - Lambdas can be used very nice to create Builders
+    - Builders with lambdas are better because the object creation can be encapsulated while
+      still giving a nice fluent interface
+
+    public class EmailBuilder {
+
+        // private constructor to prevent outside construction
+        private EmailBuilder() {}
+
+        // factory method
+        public static void send(final Consumer<EmailBuilder> codeBlock) {
+
+            // create a new instance and pass it to the lambda / Consumer
+            // in the lambda we can configure the mail
+            // after our lambda code is completed the mail gets send
+            final EmailBuilder mailer = new EmailBuilder();
+            codeBlock.accept(mailer);
+            mailer.sendMail();
+        }
+
+        public EmailBuilder from(final String adress) {
+
+        }
+
+
+        public EmailBuilder to(final String adress) {
+
+        }
+
+        private sendMail() {}
+
+    }
+
+    //usage
+    EmailBuilder.send(mailer -> {
+        mailer.from("john@doe.de")
+            .to("jane@doe.de");
+    })

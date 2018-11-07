@@ -1,0 +1,27 @@
+###############################
+####### Basic Terminology #####
+###############################
+
+- main-method: Startpunkt jeder Java App
+- Bei Start der Java-App werden 2-Memory-Locations bei den verfügbaren Computer Resourcen reserviert:
+    a.) Stack (verwaltet Methoden-Aufrufe)
+        > wird bei Start der Main-Methode erstellt und ist in einzelne Frames aufgeteilt
+        > die Main-Methode bildet im Stack das erste (und damit unterste Frame)
+        > beim Aufruf weiterer Methoden aus der Main-Methode werden für diese Methoden in Aufrufreihenfolge
+          weitere Frames erstellt und auf den Stack gepackt (die "tiefste" Methode ist damit die oberste)
+        > der Code in Methoden wird dabei gescannt: für alle lokalen Variablen dieser Methode werden eigene
+          Slots im Frame der Methode reserviert;
+          -> ACHTUNG: bei Referenzvariablen (nicht primitive Datentypen) enthalten diese Slots NICHT die
+             tatsächlich erstellten Objekte sondern nur Verweise (die Objekte liegen im Heap)
+          -> bei primitiven Datentypen ist der Wert hingegen schon im Frame gespeichert
+          -> wenn sich Variablen ändern, ändern sich somit auch die Slots in diesem Frame)
+        > wenn eine tiefere Methode abgearbeitet ist, wird das Frame der Methode aus dem Stack gelöscht (bis am Ende
+          nur noch das Frame der Main-Methode auf dem Stack liegt)
+
+    b.) Heap
+        > sobald ein Objekt eines nicht-primitiven Datentyps erstellt wird landet dieses im Heap (beim Aufruf des
+          Constructors) -> der Verweis darauf wo das Objekt im Heap ist, wird im Frame des Stack gespeichert
+        > Objekte im Heap, welche von keinem Frame aus dem Stack mehr referenziert werden, werden vom Garbage Collector
+          gelöscht
+          -> dadurch wird wieder Memory für neue Objeke frei
+        > Instanzvariablen eines Objekts besitzen dabei wieder eigene Slots im Bereich des Objekts im Heap

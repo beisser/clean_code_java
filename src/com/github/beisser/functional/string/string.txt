@@ -1,0 +1,28 @@
+######################
+####### String #######
+######################
+
+1. forEach: Iterating all chars of a String
+    str.chars().forEach(ch -> System.out.println(char))
+
+2. filter: Filtering chars
+    str.chars().filter(ch -> Character.isDigit(ch))
+
+3. All other methods from the collection can be also used for the char stream
+
+4. Example convert chars and join them to a string later
+return chars()
+      .map(c -> {
+          char currentChar = (char) c;
+          if (Character.isLetter(currentChar)) {
+              return  c+1;
+          } else {
+              return c;
+          }
+      })
+      .mapToObj(c -> (char) c)
+      .map(c -> {
+          return "AEIOUaeiou".indexOf(c) > 0 ? Character.toUpperCase(c) : c;
+      })
+      .collect(StringBuilder::new,StringBuilder::appendCodePoint, StringBuilder::append)
+      .toString();

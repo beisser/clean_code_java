@@ -1,0 +1,13 @@
+################################
+####### Abstract Data Type #####
+################################
+
+- Abstract Data Type (ADT):
+    > Sammlung von Values und Operationen welche auf diesen Werten durchgeführt werden
+    > ADT ist ein theoretisches Konstrukt welches in Java über Klassen / Objekte implementiert ist
+    > Die Operationen stehen als Public API zur Verfügung
+    > Über die Implementierung muss man nichts wissen (Blackbox)
+    > WICHTIG: Data Structures sind damit auch ADTs z.B.
+        * Stacks
+        * Linked List
+        * Queue

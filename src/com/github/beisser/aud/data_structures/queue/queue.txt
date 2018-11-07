@@ -1,0 +1,13 @@
+####################
+####### Queue ######
+####################
+
+- Prinzip: First In First Out (FIFO)
+- Stack-Implementierung siehe Java Klasse
+- Neue Elemente in der Queue werden am Ende angehängt!
+- Popular Methods of Stack implementations:
+    > insert -> Element hinzufügen (wird immer ans Ende gehängt)
+    > remove -> erstes Element bekommen
+    > peak -> welches Element steht an erster Stelle
+    > isEmpty
+    > isFull -> maxSize ist erreicht
