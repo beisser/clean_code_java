@@ -17,6 +17,10 @@
           -> wenn sich Variablen ändern, ändern sich somit auch die Slots in diesem Frame)
         > wenn eine tiefere Methode abgearbeitet ist, wird das Frame der Methode aus dem Stack gelöscht (bis am Ende
           nur noch das Frame der Main-Methode auf dem Stack liegt)
+        > Beispiel Stack:
+            bar()
+            foo()
+            main()
 
     b.) Heap
         > sobald ein Objekt eines nicht-primitiven Datentyps erstellt wird landet dieses im Heap (beim Aufruf des

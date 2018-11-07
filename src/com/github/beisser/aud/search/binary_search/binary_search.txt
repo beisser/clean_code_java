@@ -1,0 +1,7 @@
+############################
+####### Binary Search ######
+############################
+
+- der schnellste Algorithmus um eine Liste zu durchsuchen -> O(log n)
+- Devide and Conquer -> Probleme in kleinere zerlegen um das Problem zu lösen
+- WICHTIG: die Liste muss vorher sortiert sein

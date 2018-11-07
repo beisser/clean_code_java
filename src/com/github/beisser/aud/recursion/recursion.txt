@@ -1,0 +1,35 @@
+########################
+####### Recursion ######
+########################
+
+- Funktion die sich selbst aufruft
+- Resursive Funktion im Stack:
+    > wie bei jeder neuen Funktion welche aufgerufen wird, wird für jeden rekursiven Aufruf der Funktion ein
+      neues Frame erstellt und in Aufrufreihenfolge auf den Stack gepackt
+      -> jeder rekursive Aufruf braucht ein eigenes Frame, da jeweils unterschiedliche lokale Variablen
+         bestehen z.B. rekursive Funktion foo()
+         foo(1)
+         foo(2)
+         foo(3)
+         main()
+    > ebenso wird für jeden vollendeten rekursiven Aufruf dieses Frame wieder vom Stack genommen
+        -> allerdings erst wenn der innerste rekursive Aufruf beendet ist! (auch beim normalen Stack wird auf die
+           Vollendung der innersten Methode gewartet)
+        -> im oberen Beispiel:
+        foo(3) wartet auf Vollendung von foo(2)
+        foo(2) wartet auf Vollendung von foo(1)
+        etc.
+    > um Stack-Overflow zu verhindern, braucht die rekursive Funktion eine Abbruchbedingung
+        -> diese Abbruchbedingung nennt man auch "Base Case"
+- Code nach dem rekursiven Aufruf wird erst aufgerufen, wenn innerste Abarbeitung durch ist
+    if(start >= 0) {
+        reduceByOne(start - 1);
+        System.out.println(start);
+    }
+
+    -> führt daher zu (da innerster Aufruf als erstes abgearbeitet wird)
+       0
+       1
+       2
+       3
+       4

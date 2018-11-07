@@ -6,6 +6,34 @@
 - Algorithmen sind jedoch unterschiedlich schnell, je nachdem wie sie implementiert wurden
 - Algorithmen skalieren entsprechend Ihrer Input Größe: Entscheidend ist wie viele Operationen der Computer
   in Abhängigkeit von der Input Größe durchführen muss
+- Um einen Algorithmus zu beurteilen kann man die Operationen zählen (-> eine Operation ist ein Java Statement
+  das mit einem Semicolon abgeschlossen wird)
+
+    public void foo(int[] args) {
+        int last = args[args.length - 1];   // ist eine Operation
+        return args[0};     // ist eine Operation
+    }
+
+    public void bar(int[] args) {
+
+            for(int i = 0; i < args.length; i++) {      // int i = 0 ist eine Operation, i < args.length ist eine Operation ,i++ ist eine Operation
+                System.out.println(args[i);             // PRO Iteration eine Operation, also n mal -> daher O(n) -> das verlangsamt damit den Algorithmus
+
+                for(int j = 0; j < 10; j++) {
+                    System.out.println("test");     // PRO innerer und äußerer Iteration eine Operation, also "n * n" mal -> daher O(n2) -> das verlangsamt damit den Algorithmus weiter
+                }
+
+            }
+            return args[0};     // <- 1 Operation
+        }
+
+    -> immer der Worst Case (hier "n hoch 2" statt nur "n" wird in die O-Notation übernommen)
+    > Konstante Steigerung: = O(1)
+    > Lineare Steigerung: O(n)
+    > Quadratische Steigerung: O(n2) (hoch zwei)!
+    > Cubic: O(n4) (z.B. hoch vier)
+        -> n ist dabei die Größe des Inputs
+
 
    a.) Linear (Einzelne Loop)
     > z.B. bei Listen und Collections
@@ -34,9 +62,3 @@
     > die Zeit ist unabhängig von der Größe des Inputs (auch wenn z.B. eine List wächst, bleibt die Zeit gleich)
         -> optimal
 
-- Die Effizenz von Algorithmen wird so angegeben:
-    > Konstante Steigerung: = O(1)
-    > Lineare Steigerung: O(n)
-    > Quadratische Steigerung: O(n2) (hoch zwei)!
-    > Cubic: O(n4) (z.B. hoch vier)
-        -> n ist dabei die Größe des Inputs
