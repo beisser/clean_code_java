@@ -1,0 +1,49 @@
+#########################
+####### Merge Sort ######
+#########################
+
+- sehr schnelle Möglichkeit zu sortieren O(n log n)
+- Nachteil: Verbraucht mehr Memory, da Kopien des Arrays erstellt werden
+- Geht wie Binary Search nach Devide in Conquer vor
+- 2 Steps:
+    > Splitting: unsortiertes Array in einen Zustand bringen wo man es in zwei jeweils in sich sortierte Teile teilen kann
+    > Merge: dann werden die beiden sortierten Subsets mit einander verglichen und gemerged
+
+- Ablauf
+
+    a.) Splitting über Rekursion
+    > das ursprüngliche Array wird zunächst in der Mitte geteilt, die erlangten Subsets werden ihrerseits wieder in
+      der Mitte geteilt usw.
+      [7,4,2,1]
+      [7,4][2,1]
+      ...
+    > das ursprüngliche Array wird so lange in kleinere Arrays aufgeteilt bis man nun nur noch Arrays mit einem
+      Element hat
+      [7][4][2][1]
+    > sobald der Base-Case der Rekursion erreicht ist (d.h. nur noch Arrays mit einzelnen Elementen vorhanden sind, erfolgt
+      der Merge aufgerufen
+    > die Merge Funktion ihrerseits vergleicht die einzelnen Elemente von zwei Arrays
+      [4,7][1,2]
+      [1,2,4,7]
+    > nach dem Merge ist ein Rekursions-Durchlauf beendet und führt damit zu einem weiteren Merge
+        -> Rekursion und Merge fügen die einzelnen Arrays in rekursiven Schritten wieder zu größeren sortierten
+            Arrays zusammen, bis die ursprüngliche Größe wieder erreicht ist
+
+    b.) Merging
+    > die Merge Methode bekommt
+        * das Array
+        * left
+        * mid
+        * right
+    > left und right sind dabei schon sortiert
+    > aus left und right wird jeweils ein neues Array mit diesen Werten erstellt
+    > die Werte aus left und right werden nun einzeln verglichen und im Ursprungsarray sortiert wieder reingeschrieben
+    > dabei braucht man 3 Pointer-Variablen
+        i -> aktueller Pointer in left
+        j -> aktueller Pointer in right
+        k -> aktueller Pointer im Ergebnisarray
+    > Zunächst wird left[i] mit right[j] verglichen
+    > der kleinere Wert kommt in arr[k]
+    > im Array aus dem der kleinere Wert kam (left oder right) wird der Pointer um 1 erhöht und anschließend auch
+      der Pointer der Ergebnisarrays erhöht
+

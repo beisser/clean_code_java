@@ -1,0 +1,11 @@
+#############################
+####### Insertion Sort ######
+#############################
+
+- teil das Array in zwei Teile:
+    > sortiert
+    > nicht sortiert
+- Der sortierte Bereich ist am Anfang lediglich die erste Stelle
+    > dann wird jedes weitere Element genommen und in den sortierten Bereich rübergezogen (dieser wächst also)
+    > während des Rüberziehens wird das neue Element im soriterten Bereich richtig einsortiert
+- langsam =O(n2)

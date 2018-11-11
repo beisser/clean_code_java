@@ -1,0 +1,9 @@
+#############################
+####### Selection Sort ######
+#############################
+
+- geht durch das komplette Array und sucht den kleinsten Wert
+    > der kleinste Wert kommt dann an die erste Stelle im Array und tauscht Positionen
+    > geht dann ab der zweiten Stelle durch das Subset des Arrays und sucht nach dem Minimum und tauscht wieder
+      entsprechend Positionen
+- langsam =O(n2)
