@@ -1,0 +1,30 @@
+#########################
+####### Quick Sort ######
+#########################
+
+- sehr schnelle Möglichkeit zu sortieren O(n log n)
+- Vorteil gegenüber MergeSort -> keine zusätzlichen Arrays notwendig
+- Geht wie Binary Search nach Devide in Conquer vor
+- Alauf:
+
+    1.) Partitioning
+    > Es wird ein Pivot-Punkt festgelegt (kann ein beliebiger sein, meistens das letzte Element)
+    > dann werden alle anderen Elemente mit diesem Pivot-Punkt verglichen und je nachdem ob größer oder kleiner
+      werden die Elemete links oder rechts des Pivots platziert
+    > dazu braucht es folgende Variablen
+        i = -1
+        j = 0
+    > dann wird jedes Element mit dem Pivot verglichen
+        a.) laufender Pointer -> wird immer um 1 erhöhtt -> j++
+        b.) wenn das Element kleiner oder gleich Pivat ist -> i++;
+            -> dann Elemente an i und j swappen
+            -> das eigentliche Pivot Element wird am Ende an die Position i + 1 gesetzt
+    > ist man am Ende, weiß man dass
+        a.) alle Werte LINKS vom Pivot kleiner als die Pivot ist (ACHTUNG: nicht sortiert!)
+        b.) alle Werte RECHTS vom Pivot größer als die Pivot ist (ACHTUNG: nicht sortiert!)
+        c.) Und das wichtigste: Die Position des Pivots ist garantiert die richtige (auch im später sortierten Array)
+            -> mit dieser Position wird das Array in linke (p - 1) und rechte (p + 1) Hälften geteilt
+            - damit kann sortiert werden
+
+    2.) Rekursiver Aufruf
+    > für beide Array Hälften wird anschließend die gleiche Methode rekursiv aufgerufen
