@@ -1,0 +1,58 @@
+#################################
+####### Binary Search Tree ######
+#################################
+
+1. Allgemein
+- Hierbei handelt es sich um eine Datenstruktur
+- bietet:
+    > schnelle Suche wie Binary Search
+    > schnelles Einfügen und Löschen von Elementen von bestimmten Stellen
+- in der IT geht ein Baum immer von oben nach unten
+- Begriffe:
+    > Nodes: Elemente des Baums
+        * einen Root-Node
+        * viele Child-Nodes
+        * Leaf-Nodes (solche ohne Children)
+    > Level: Die Elemente haben dabei stets ein gewisses Level
+        * einen Root-Node (Level 0)
+        * usw.
+    > Binary Tree vs. normal Tree: Nodes können maximal 2 Children haben
+    > Subtree: Teile des Trees
+    > Edge: Verbindung zwischen 2 Nodes
+    > Depth: Anzahl von Edges bis zum Root Node
+    > Traversing: Den Baum Node für Node nach unten navigieren und durch Prüfung ob kleiner oder größer gleich (siehe 2.)
+      herausfinden wo ein neues Element rein muss
+    > Visiting: Sobald ein Node gechecked wird, wurde dieser gevisited
+
+2. Binary Search Tree
+- Merkmale:
+    > Der Wert des linken Child-Nodes muss kleiner als Parent Node sein
+    > Der Wert des rechten Child-Nodes muss größer oder gleich als Parent Node sein
+
+    2.1. Neue Elemente einfügen
+        -> nach dem oberen Schema müssen auch neue Werte eingefügt werden (z.B. 49)
+        -> dabei bei jedem Node die Frage stellen ob der neue Wert kleiner (dann auf der linken Seite weiter) oder
+           größer (dann auf der rechten Seite weiter) als der Wert im aktuellen Node ist
+
+                              53
+
+                    28                  62
+
+
+                        49 (müsste hier eingefügt werden)
+
+
+    2.2. Nodes löschen
+    > unproblematisch wenn es sich lediglich um ein Leaf-Node handelt
+    > problematisch wenn der Node zwei Children hat
+        -> dann muss man folgendes Vorgehen wählen
+        -> der gelöschte Node wird mit dem KLEINSTEN Node der rechten Seite (ganz links) ersetzt
+
+            50                                                  50
+                        25 wird mit 30 ersetzt
+        25                          -->                     30
+
+    15      35                                          15      35
+
+        30      40                                                  40
+
