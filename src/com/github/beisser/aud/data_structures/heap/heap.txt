@@ -1,0 +1,53 @@
+###################
+####### Heap ######
+###################
+
+1. Allgemein
+- Hierbei handelt es sich um eine Datenstruktur
+- dabei handelt es sich wie beim Binary Search Tree um einen Baum
+    -> dieser muss jedoch wie folgt belegt werden
+        a.) von oben nach unten
+        b.) von links nach rechts (ohne Vergleich mit Node Value)
+- 2 Arten von Heaps
+    a.) Max-Heap
+        > Root Node hat den höchsten Wert im gesamten Baum
+        > alle Parents müssen größer als Children sein
+                13                                  17
+
+          8         9           ->          8           13
+
+      6     2   17                      6       2   9
+
+        > Neue Werte hinzufügen
+            -> neue Werte müssen auf dem letzten Level von Links nach rechts eingefügt werden
+            -> z.B. hier wäre der neue Wert 17
+            -> der neue Wert muss dann mit dem Parent verglichen werden -> wenn der neue Wert größer ist
+               müssen die beiden Nodes getauscht werden, da der Max-Heap ja immer von großen Werten nach kleinen Werten
+               sortiert werden muss -> man vertauscht so lange Nodes nach oben im Tree bis der neue Wert kleiner als der Parent
+               Node ist
+
+        > Nodes löschen
+            -> Heap wird immer von oben gelöscht (es muss immer der Root Node gelöscht werden!)
+            -> daher erst Root löschen
+            -> dann nimmt das letzte Element des Heaps (Element das in der letzten Zeile am weitesten rechts ist) die Stelle
+               des Root ein
+            -> nun werden die beiden Children mit dem Root verglichen und der größere Wert mit dem am Root getauscht
+            -> das Tauschen so lange durchführen bis das kleinste Element wieder unten angekommen ist
+
+    b.) Min-Heap
+        > Root Node hat den kleinsten Wert im gesamten Baum
+        > alle Parents müssen kleiner als Children sein
+            -> ansonten alles umgekehrt wie Max Heap
+
+- Ein Heap wird in der Regel über ein Array realisiert
+
+            13
+
+        8       9
+
+    -> {13,8,9}
+    -> um die Index-Positionen von bestimmten Nodes zu bekommen gibt es feste Formeln:
+        * left Child                = 2n + 1 (n ist der Index des Parent)
+        * right Child               = 2n + 2 (n ist der Index des Parent)
+        * parent eines Child        = floor((n-1)/2)
+        *
