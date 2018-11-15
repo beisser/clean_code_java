@@ -50,4 +50,4 @@
         * left Child                = 2n + 1 (n ist der Index des Parent)
         * right Child               = 2n + 2 (n ist der Index des Parent)
         * parent eines Child        = floor((n-1)/2)
-        *
+        * Anzahl der Level im Heap  = Array Length / 2
