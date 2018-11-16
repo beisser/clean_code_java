@@ -1,0 +1,51 @@
+#########################
+####### Hash Table ######
+#########################
+
+1. Allgemein
+- Hierbei handelt es sich um eine Datenstruktur
+- ist mit die schnellste Datenstruktur die es gibt -> O(1) -> da sie nur über den Index auf ein Element im Array zugreift
+- Hash-Table baut auf ein Array auf
+    > alle Werte sind in einem normalen Array
+    > eine spezielle Hashing-Funktion nimmt den gesuchten Wert entgegen und gibt den Index des Elements im Array wieder
+    > diese Hashing-Function muss man selber schreiben und sie muss mit dem übergebenen Wert eindeutig eine
+      Indexposition zuweisen können
+
+- Mögliche Probleme: Clustering (d.h. die Hashing Funktion gibt für mehrere unterschiedliche Werte den gleiche Index zurück)
+        -> als Lösung gibt es folgende Möglichkeiten:
+
+            a.) Linear Probing
+             * beim Einfügen eines neuen Elements an der Index-Position x exisitert bereits ein Element (das bedeutet
+               dass die Hashing Funktion für beide Elemente den gleichen Index zurückgibt)
+             * Beim linear Probing schaut man immer in Einser-Schritten (x + 1) einen Index weiter ob eine freie Stelle ist
+              und wiederholt das bis man eine gefunden hat
+                -> Problem dabei: haben viele Elemente den gleichen Index (d.h. es gibt einen großen Cluster) müssen
+                   beim Suchen alle Elemete die diesen Index x haben nach dem gewünschten Wert durchsucht werden
+                -> das entspricht dann schon wieder fast einer normalen Array - Suche und ist deshalb zu vermeiden
+
+            b.) Quadratic Clustering
+              * wie linear Clustering, nur dass statt Einser-Schritten der Probing Abstand größer gewählt wird (x + 1*2)
+
+            c.) Double Hashing
+              * bei diesem besten Vorgehen: das Element wird zwei Hashing Funktionen übergeben
+                1.) hash1(ele) -> gibt die Index-Postition (z.B. x)
+                2.) hash2(ele) -> (wenn x belegt) gibt die Größe der Schritte von der eigentlichen Position an (z.B. x + 3)
+                -> hash1() und hash2() müssen sich in der Logik wie sie einen neuen Hash errechnen unterscheiden
+                -> das Ergebnis von hash2() darf NIE 0 sein
+                -> dadurch dass die Größe der Schritte mit denen eine neue freie Position von der eigentlichen Position
+                   gesucht wird für alle Werte wieder unterschiedlich sind ist der Cluster (die Collection) von gleichen
+                   Elementen die man durchsuchen muss kleiner und damit performanter
+                -> wichtig jedoch: beim Suchen einer neuen freien Position darf nicht einfach nur (x+3) angewendet werden
+                -> vielmehr ist die Suche nach einer neuen Stelle so zu machen:
+                    int nextIndex = x + 3;
+                    nextIndex = nextIndex % arr.length;
+                -> das gibt den neuen Index der geprüft werden muss ob er frei ist (diese Operation wird so lange ausgeführt
+                   in einer while-Loop bis man einen freien Platz findet
+                -> die Modulo-Operation ist sehr wichtig, da die Index-Position welche die hash1() errechnet sehr hoch
+                   sein kann und man damit IndeyOutOfBoundsExceptions zuvorkommen möchte
+                -> zudem ist zu beachten das im Hinblick darauf, dass mit einer while-loop nach freien Spots gesucht wird,
+                   die Größe des Arrays von Bedeutung ist
+                   dabei ist es UNBEDINGT notwendig, dass die Größe des Arrays eine Primzahl ist (nur durch 1 und sich
+                   selbst teilbar) da sonst die Gefahr besteht, dass man wegen dem Modulo in eine unendliche Loop kommt
+                -> denn nur Modulo in Verbindung mit einer Primzahl ermöglicht es so viele Stellen wie möglich nach Freiheit
+                   zu prüfen (würde die Array-Größe keine Primzahl sein, würden immer die gleichen Stellen geprüft)
